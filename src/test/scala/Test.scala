@@ -3,11 +3,12 @@ import org.scalatest.FreeSpec
 
 import Main._
 
-class CountingSpec extends FreeSpec with ShouldMatchers{ 
+object CountingSpec {
   val affinity: Map[(User, User), Emotion] = Map(
     ("c0hama", "hara") -> Love,
     ("hara", "c0hama") -> Love,
     ("c0hama", "maeda_") -> Hate
+    //,("maeda_", "c0hama") -> Love
   )
 
   val message:Map[(User, Emotion), String] = Map(
@@ -15,6 +16,10 @@ class CountingSpec extends FreeSpec with ShouldMatchers{
     ("c0hama", Love) -> "Vim",
     ("c0hama", Hate) -> "連番クラス"
   )
+}
+
+class CountingSpec extends FreeSpec with ShouldMatchers{ 
+  import CountingSpec._
 
   val conv = new Conversation(affinity, message)
 
