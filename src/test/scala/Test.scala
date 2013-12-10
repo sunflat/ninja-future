@@ -4,16 +4,16 @@ import org.scalatest.FreeSpec
 import Main._
 
 class CountingSpec extends FreeSpec with ShouldMatchers{ 
-  val affinity: Map[(User, User), Emotion] = Map(
-    ("c0hama", "hara") -> Love,
-    ("hara", "c0hama") -> Love,
-    ("c0hama", "maeda_") -> Hate
+  val affinity: Map[User ==> User, Emotion] = Map(
+    ("c0hama" ==> "hara", Love),
+    ("hara" ==> "c0hama", Love),
+    ("c0hama" ==> "maeda_", Hate)
   )
 
-  val message:Map[(User, Emotion), String] = Map(
-    ("hara", Love) -> "Dart",
-    ("c0hama", Love) -> "Vim",
-    ("c0hama", Hate) -> "連番クラス"
+  val message:Map[User ==> Emotion, String] = Map(
+    ("hara" ==> Love, "Dart"),
+    ("c0hama" ==> Love, "Vim"),
+    ("c0hama" ==> Hate, "連番クラス")
   )
 
   val conv = new Conversation(affinity, message)
