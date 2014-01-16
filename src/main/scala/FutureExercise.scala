@@ -12,7 +12,7 @@ object FutureExercise {
   
   var waitScale = 1000
   
-  class MapForFuture[A, B](map:Map[A,B]) {
+  implicit class MapForFuture[A, B](val map:Map[A,B]) extends AnyVal {
     def getFuture(key:A):Future[B] = future {
       val wait = scala.util.Random.nextInt(waitScale*4) + waitScale
       println("begin wait "+ wait + ", " + key)
@@ -23,9 +23,7 @@ object FutureExercise {
     }
   }
   
-  implicit def convertToMapForFuture[A,B](map:Map[A,B]) = new MapForFuture(map)
-  
-  class FutureEx[T](a:Future[T]) {
+  implicit class FutureEx[T](val a:Future[T]) extends AnyVal {
     def orElse(b:Future[T]):Future[T] = {
       val promise = Promise[T]()
       a.onComplete(promise.tryComplete(_))
@@ -33,8 +31,6 @@ object FutureExercise {
       promise.future
     }
   }
-  
-  implicit def convertToFutureEx[T](a:Future[T]) = new FutureEx(a)
   
   class ConversationFuture(
     affinity: Map[(User, User), Emotion],

@@ -8,17 +8,9 @@ import scala.util.Failure
 object TryExercise {
   import Main._
   
-  class MapForTry[A, B](map:Map[A,B]) {
-    def getTry(key:A):Try[B] = {
-      try{
-        Success(map(key))
-      }catch{
-        case ex:Exception => Failure(ex)
-      }
-    }
+  implicit class MapForTry[A, B](val map:Map[A,B]) extends AnyVal{
+    def getTry(key:A):Try[B] = Try(map(key))
   }
-  
-  implicit def mapToMapForTry[A,B](map:Map[A,B]) = new MapForTry(map)
   
   class ConversationTry(
     affinity: Map[(User, User), Emotion],
